@@ -1,0 +1,26 @@
+import java.time.LocalDate;
+import java.util.*;
+
+public class ProjectManagement {
+    public static void main(String[] args) {
+        List<Project> projects = Arrays.asList(
+                new Project("Проєкт A", LocalDate.of(2025, 5, 1), 1200000),
+                new Project("Проєкт B", LocalDate.of(2025, 4, 15), 800000),
+                new Project("Проєкт C", LocalDate.of(2025, 6, 20), 2000000),
+                new Project("Проєкт D", LocalDate.of(2025, 3, 10), 1500000)
+        );
+        
+        List<String> projectNames = new ArrayList<>();
+        projects.stream()
+                .filter(p -> p.budget() > 1000000) 
+                .sorted(Comparator.comparing(Project::deadline))
+                .forEach(p -> projectNames.add(p.name())); 
+        
+        double totalBudget = projects.stream()
+                .mapToDouble(Project::budget)
+                .sum();
+        
+        System.out.println("Проєкти з бюджетом > 1 000 000 грн: " + projectNames);
+        System.out.println("Загальний бюджет: " + totalBudget);
+    }
+}
